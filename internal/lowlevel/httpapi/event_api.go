@@ -1,14 +1,15 @@
 package httpapi
 
 import (
-	"io/ioutil"
+	"context"
+	"io"
 	"net/http"
 
 	"github.com/xen0n/go-workwx/internal/lowlevel/envelope"
 )
 
 type EnvelopeHandler interface {
-	OnIncomingEnvelope(rx envelope.Envelope) error
+	OnIncomingEnvelope(ctx context.Context, rx envelope.Envelope) error
 }
 
 func (h *LowlevelHandler) eventHandler(
@@ -17,8 +18,8 @@ func (h *LowlevelHandler) eventHandler(
 ) {
 	// request bodies are assumed small
 	// we can't do streaming parse/decrypt/verification anyway
-	defer r.Body.Close()
-	body, err := ioutil.ReadAll(r.Body)
+	defer func() { _ = r.Body.Close() }()
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		rw.WriteHeader(http.StatusInternalServerError)
 		return
@@ -31,7 +32,7 @@ func (h *LowlevelHandler) eventHandler(
 		return
 	}
 
-	err = h.eh.OnIncomingEnvelope(ev)
+	err = h.eh.OnIncomingEnvelope(r.Context(), ev)
 	if err != nil {
 		rw.WriteHeader(http.StatusInternalServerError)
 		return
