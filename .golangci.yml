@@ -30,7 +30,7 @@ linters-settings:
   gofmt:
     simplify: true
   goimports:
-    local-prefixes: github.com/xen0n/go-workwx
+    local-prefixes: github.com/gaofu3-tal/go-workwx
   misspell:
     locale: US
   nakedret:

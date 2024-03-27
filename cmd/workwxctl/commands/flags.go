@@ -6,8 +6,6 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v2"
-
-	"github.com/xen0n/go-workwx"
 )
 
 const (

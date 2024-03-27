@@ -2,11 +2,10 @@ package commands
 
 import (
 	"fmt"
+	"github.com/gaofu3-tal/go-workwx"
 	"os"
 
 	"github.com/urfave/cli/v2"
-
-	"github.com/xen0n/go-workwx"
 )
 
 func cmdUploadTempMedia(c *cli.Context) error {

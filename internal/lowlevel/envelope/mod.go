@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/xen0n/go-workwx/internal/lowlevel/encryptor"
-	"github.com/xen0n/go-workwx/internal/lowlevel/signature"
+	"github.com/gaofu3-tal/go-workwx/internal/lowlevel/encryptor"
+	"github.com/gaofu3-tal/go-workwx/internal/lowlevel/signature"
 )
 
 type Processor struct {
