@@ -97,6 +97,7 @@ type reqMessage struct {
 	ToParty []string
 	ToTag   []string
 	ChatID  string
+	Code    string
 	AgentID int64
 	MsgType string
 	Content map[string]interface{}
@@ -132,6 +133,10 @@ func (x reqMessage) intoBody() ([]byte, error) {
 		obj["touser"] = strings.Join(x.ToUser, "|")
 		obj["toparty"] = strings.Join(x.ToParty, "|")
 		obj["totag"] = strings.Join(x.ToTag, "|")
+	}
+
+	if len(x.Code) > 0 {
+		obj["code"] = x.Code
 	}
 
 	return marshalIntoJSONBody(obj)
