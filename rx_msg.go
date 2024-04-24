@@ -9,6 +9,8 @@ import (
 
 // RxMessage 一条接收到的消息
 type RxMessage struct {
+	// ToUserName 企业微信CorpID
+	ToUserName string
 	// FromUserID 发送者的 UserID
 	FromUserID string
 	// SendTime 消息发送时间
@@ -25,6 +27,20 @@ type RxMessage struct {
 	ChangeType ChangeType
 
 	extras messageKind
+
+	raw []byte // 原始的消息
+}
+
+func (m *RxMessage) Unmarshal(raw []byte) error {
+	v, err := fromEnvelope(raw)
+	if err == nil {
+		*m = *v
+	}
+	return err
+}
+
+func (m *RxMessage) Raw() string {
+	return string(m.raw)
 }
 
 func fromEnvelope(body []byte) (*RxMessage, error) {
@@ -49,6 +65,7 @@ func fromEnvelope(body []byte) (*RxMessage, error) {
 		sendTime := time.Unix(common.CreateTime, 0) // in time.Local
 
 		obj = RxMessage{
+			ToUserName: common.ToUserName,
 			FromUserID: common.FromUserName,
 			SendTime:   sendTime,
 			MsgType:    common.MsgType,
@@ -58,6 +75,8 @@ func fromEnvelope(body []byte) (*RxMessage, error) {
 			ChangeType: common.ChangeType,
 
 			extras: extras,
+
+			raw: body,
 		}
 	}
 

@@ -204,6 +204,37 @@ func (c *WorkwxApp) SendTemplateCardMessage(
 	)
 }
 
+// KfOnEventSend 发送欢迎语等事件响应消息:菜单消息
+func (c *WorkwxApp) KfOnEventSend(
+	recipient *Recipient,
+	head string, // 起始文本
+	tail string, // 结束文本
+	list []map[string]interface{}, // 菜单项配置，不超过10个
+	isSafe bool,
+) error {
+	content := map[string]interface{}{
+		"list": list,
+	}
+	if len(head) > 0 {
+		content["head_content"] = head
+	}
+	if len(tail) > 0 {
+		content["tail_content"] = tail
+	}
+	if len(list) > 0 {
+		content["list"] = list
+	}
+	if len(content) == 0 {
+		return errors.New("content is empty")
+	}
+	return c.sendMessage(
+		recipient,
+		"msgmenu",
+		content,
+		isSafe,
+	)
+}
+
 // sendMessage 发送消息底层接口
 //
 // 收件人参数如果仅设置了 `ChatID` 字段，则为【发送消息到群聊会话】接口调用；
@@ -235,6 +266,7 @@ func (c *WorkwxApp) sendMessage(
 		ToParty: recipient.PartyIDs,
 		ToTag:   recipient.TagIDs,
 		ChatID:  recipient.ChatID,
+		Code:    recipient.Code,
 		AgentID: c.AgentID,
 		MsgType: msgtype,
 		Content: content,
