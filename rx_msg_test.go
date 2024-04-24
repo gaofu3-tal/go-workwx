@@ -127,3 +127,26 @@ func TestRxMessageChangeContactCreateUser(t *testing.T) {
 		})
 	})
 }
+
+func TestRxMessage_Unmarshal(t *testing.T) {
+	const msg = `<xml>
+   <ToUserName><![CDATA[ww12345678910]]></ToUserName>
+   <CreateTime>1348831860</CreateTime>
+   <MsgType><![CDATA[event]]></MsgType>
+   <Event><![CDATA[kf_msg_or_event]]></Event>
+   <Token><![CDATA[ENCApHxnGDNAVNY4AaSJKj4Tb5mwsEMzxhFmHVGcra996NR]]></Token>
+   <OpenKfId><![CDATA[wkxxxxxxx]]></OpenKfId>
+</xml>`
+	var m RxMessage
+	err := m.Unmarshal([]byte(msg))
+	if err == nil {
+		if m.Raw() == msg {
+			t.Log("Unmarshal success")
+		} else {
+			t.Error("Unmarshal failed")
+		}
+	} else {
+		t.Error(err)
+	}
+
+}

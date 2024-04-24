@@ -25,6 +25,20 @@ type RxMessage struct {
 	ChangeType ChangeType
 
 	extras messageKind
+
+	raw []byte // 原始的消息
+}
+
+func (m *RxMessage) Unmarshal(raw []byte) error {
+	v, err := fromEnvelope(raw)
+	if err == nil {
+		*m = *v
+	}
+	return err
+}
+
+func (m *RxMessage) Raw() string {
+	return string(m.raw)
 }
 
 func fromEnvelope(body []byte) (*RxMessage, error) {
@@ -58,6 +72,8 @@ func fromEnvelope(body []byte) (*RxMessage, error) {
 			ChangeType: common.ChangeType,
 
 			extras: extras,
+
+			raw: body,
 		}
 	}
 
