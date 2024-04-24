@@ -9,6 +9,8 @@ import (
 
 // RxMessage 一条接收到的消息
 type RxMessage struct {
+	// ToUserName 企业微信CorpID
+	ToUserName string
 	// FromUserID 发送者的 UserID
 	FromUserID string
 	// SendTime 消息发送时间
@@ -63,6 +65,7 @@ func fromEnvelope(body []byte) (*RxMessage, error) {
 		sendTime := time.Unix(common.CreateTime, 0) // in time.Local
 
 		obj = RxMessage{
+			ToUserName: common.ToUserName,
 			FromUserID: common.FromUserName,
 			SendTime:   sendTime,
 			MsgType:    common.MsgType,
