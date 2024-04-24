@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gaofu3-tal/go-workwx"
 	"github.com/urfave/cli/v2"
 )
 

@@ -5,7 +5,7 @@ import (
 
 	"github.com/urfave/cli/v2"
 
-	"github.com/xen0n/go-workwx"
+	"github.com/gaofu3-tal/go-workwx"
 )
 
 func cmdAppchatCreate(c *cli.Context) error {

@@ -1,6 +1,7 @@
 package workwx_test
 
 import (
+	"github.com/gaofu3-tal/go-workwx"
 	"net/http"
 	"strconv"
 	"time"

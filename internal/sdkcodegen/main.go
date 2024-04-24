@@ -7,6 +7,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 )
 
@@ -31,7 +32,7 @@ func main() {
 	}
 	defer file.Close()
 
-	content, err := io.ReadAll(file)
+	content, err := ioutil.ReadAll(file)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "read input failed: %+v\n", err)
 		os.Exit(1)
