@@ -4,8 +4,6 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli/v2"
-
-	"github.com/xen0n/go-workwx"
 )
 
 func cmdSendMessage(c *cli.Context) error {

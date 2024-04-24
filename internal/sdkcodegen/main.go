@@ -1,4 +1,5 @@
-//+build sdkcodegen
+//go:build sdkcodegen
+// +build sdkcodegen
 
 package main
 
@@ -6,7 +7,6 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 )
 
@@ -31,7 +31,7 @@ func main() {
 	}
 	defer file.Close()
 
-	content, err := ioutil.ReadAll(file)
+	content, err := io.ReadAll(file)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "read input failed: %+v\n", err)
 		os.Exit(1)
